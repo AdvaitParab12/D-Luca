@@ -1,9 +1,9 @@
 import React from "react";
-
+import Bellow from "./Bellow";
 function App() {
   return (
-    <div className="App">
-      <h1>Hello</h1>
+    <div className="flex items-center justify-center h-screen marker:text-red-500">
+      <Bellow />
     </div>
   );
 }
