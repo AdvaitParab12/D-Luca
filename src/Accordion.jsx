@@ -1,30 +1,60 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 function Accordion({
   title = "Title",
   description = "Description",
   isOpen = false,
   underline = true,
-  showWordCount=true,
+  showWordCount = false,
   onClick = () => {},
 }) {
- 
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    fetch("https://wakati.wofad91300.workers.dev/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        text: description,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => setCount(data.seconds));
+    console.log("API called");
+  }, []);
+
+  // fetch("https://wakati.advait0012.workers.dev/", {
+  //   method: "POST",
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //   },
+  //   body: JSON.stringify({
+  //     text: description,
+  //   }),
+  // })
+  //   .then((res) => res.json())
+  //   .then((data) => setCount(data.wordCount));
+
   return (
-    <div>
-      <details className="w-80 bg-zinc-200 m-1 p-2 rounded-lg" open={isOpen} onClick={()=>onClick(title)}>
-        <summary
-          className={`font-bold cursor-pointer text-stone-900 ${
-            underline && "hover:underline"
-          }`}
-        >
-          {title}{" "}
-          <span className="font-normal text-zinc-500">
-            {" "} {showWordCount && `${description.split(" ").length} words`}
-          </span>
-        </summary>
-        <p>{description}</p>
-      </details>
-    </div>
+    <details
+      className="w-80 bg-stone-100 m-1 p-2 rounded"
+      open={isOpen}
+      onClick={() => {
+        onClick(title);
+      }}
+    >
+      <summary className={`cursor-pointer font-bold text-stone-900`}>
+        <span className={`${underline && "hover:underline"}`}>
+          {title} 
+        </span>
+        <span className="font-normal text-zinc-600 text-sm ml-3">
+          {`${showWordCount}` && `${count} seconds`}
+        </span>
+      </summary>
+      <p className="text-stone-800">{description}</p>
+    </details>
   );
 }
 
