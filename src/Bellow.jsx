@@ -1,7 +1,7 @@
 import React from "react";
 import Accordion from "./Accordion";
 
-function Bellow({ data = [],filterByLetter="", isOpen=false, underline=true, showWordCount=false ,onClick= () => {} }) {
+function Bellow({ data = [],filterByLetter="", isOpen=false, underline=true, showWordCount=false ,onClick= () => {},setLastClicked }) {
   return (
     <div className="border-2 border-zinc-600 rounded-lg">
       {data
@@ -15,6 +15,7 @@ function Bellow({ data = [],filterByLetter="", isOpen=false, underline=true, sho
             underline={underline}
             showWordCount={showWordCount}
             onClick={onClick}
+            setLastClicked={setLastClicked}
           />
         ))}
     </div>

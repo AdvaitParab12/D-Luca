@@ -7,6 +7,7 @@ function Accordion({
   underline = true,
   showWordCount = false,
   onClick = () => {},
+  setLastClicked = () => {},
 }) {
   const [count, setCount] = useState(0);
 
@@ -22,33 +23,19 @@ function Accordion({
     })
       .then((res) => res.json())
       .then((data) => setCount(data.seconds));
-    console.log("API called");
   }, []);
-
-  // fetch("https://wakati.advait0012.workers.dev/", {
-  //   method: "POST",
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //   },
-  //   body: JSON.stringify({
-  //     text: description,
-  //   }),
-  // })
-  //   .then((res) => res.json())
-  //   .then((data) => setCount(data.wordCount));
-
   return (
     <details
       className="w-80 bg-stone-100 m-1 p-2 rounded"
       open={isOpen}
       onClick={() => {
-        onClick(title);
+        onClick(title),
+        setLastClicked(title);
       }}
+      
     >
       <summary className={`cursor-pointer font-bold text-stone-900`}>
-        <span className={`${underline && "hover:underline"}`}>
-          {title} 
-        </span>
+        <span className={`${underline && "hover:underline"}`}>{title}</span>
         <span className="font-normal text-zinc-600 text-sm ml-3">
           {`${showWordCount}` && `${count} seconds`}
         </span>
